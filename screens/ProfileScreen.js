@@ -1,15 +1,18 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { auth } from '../firebase'
+import Logout from '../components/buttons/Logout'
 
-const HomeScreen = () => {
+const ProfileScreen = () => {
 	return (
 		<View style={styles.container}>
-			<Text>Bienvenue sur Kimanjou</Text>
+			<Text>Email: {auth.currentUser?.email}</Text>
+			<Logout />
 		</View>
 	)
 }
 
-export default HomeScreen
+export default ProfileScreen
 
 const styles = StyleSheet.create({
 	container: {

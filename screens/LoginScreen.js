@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
 import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
-// import firebase auth
 import { auth } from '../firebase'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
 
