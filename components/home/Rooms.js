@@ -22,7 +22,17 @@ const Rooms = () => {
       if (docSnap.exists()) {
         const room = docSnap.data()
         room.id = docSnap.id
-        setRooms((prev) => [...prev, room])
+
+        // get users who are in the room
+        const q = query(collection(db, 'rooms_users'), where('roomId', '==', room.id))
+        const querySnapshot = await getDocs(q)
+        const users = []
+        querySnapshot.forEach((doc) => {
+          users.push(doc.data().userId)
+        })
+        room.users = users
+
+        setRooms((prevRooms) => [...prevRooms, room])
       }
     })
 	}
@@ -31,11 +41,13 @@ const Rooms = () => {
     getUserRooms()
   }, [])
 
+  console.log(rooms)
+
 	return (
 		<View style={styles.container}>
 			<Text>Rooms</Text>
       {rooms.map((room) => (
-        <Room key={room.id} name={room.name} />
+        <Room key={room.id} name={room.name} nbUsers={room.users.length} />
       ))}
 		</View>
 	)

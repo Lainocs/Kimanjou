@@ -17,10 +17,21 @@ const NewRoomScreen = () => {
 
 	const [roomName, setRoomName] = useState('')
 
+	// create random room id (6 characters)
+	const generateRoomId = () => {
+		const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+		let roomId = ''
+		for (let i = 0; i < 6; i++) {
+			roomId += characters.charAt(Math.floor(Math.random() * characters.length))
+		}
+		return roomId
+	}
+
 	const handleCreateRoom = async () => {
     try {
 			const docRef = await addDoc(collection(db, 'rooms'), {
 				name: roomName,
+				code: generateRoomId(),
 			})
 			await addDoc(collection(db, 'rooms_users'), {
 				roomId: docRef.id,
