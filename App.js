@@ -9,6 +9,7 @@ const Stack = createNativeStackNavigator()
 import LoginScreen from './screens/LoginScreen'
 import HomeScreen from './screens/HomeScreen'
 import ProfileScreen from './screens/ProfileScreen'
+import MapScreen from './screens/MapScreen'
 
 export default function App() {
 	return (
@@ -34,6 +35,9 @@ export default function App() {
 				<Stack.Screen options={{
 				headerBackTitle: 'Carte',
 				}} name="Profile" component={ProfileScreen} />
+				<Stack.Screen options={{
+				headerBackTitle: 'Home',
+				}} name="Map" component={MapScreen} />
       </Stack.Navigator>
     </NavigationContainer>
 	)
