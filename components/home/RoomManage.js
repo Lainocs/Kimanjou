@@ -3,10 +3,10 @@ import React from 'react'
 import JoinRoom from '../buttons/JoinRoom'
 import NewRoom from '../buttons/NewRoom'
 
-const RoomManage = () => {
+const RoomManage = ({displayModal}) => {
   return (
     <View style={styles.container}>
-      <JoinRoom />
+      <JoinRoom displayModal={displayModal} />
       <NewRoom />
     </View>
   )

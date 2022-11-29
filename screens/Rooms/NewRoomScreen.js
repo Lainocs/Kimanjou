@@ -28,18 +28,32 @@ const NewRoomScreen = () => {
 	}
 
 	const handleCreateRoom = async () => {
-    try {
-			const docRef = await addDoc(collection(db, 'rooms'), {
-				name: roomName,
-				code: generateRoomId(),
-			})
+		try {
+			// if room name is empty, return
+			if (roomName === '') {
+				return alert('Please enter a room name')
+			}
+
+			const q = query(collection(db, 'rooms'), where('name', '==', roomName))
+			const querySnapshot = await get(q)
+			if (querySnapshot.empty) {
+				const roomId = generateRoomId()
+				await addDoc(collection(db, 'rooms'), {
+					name: roomName,
+					id: roomId,
+				})
+				navigation.replace('Home')
+			} else {
+				alert('Room name already exists')
+			}
+
 			await addDoc(collection(db, 'rooms_users'), {
 				roomId: docRef.id,
 				userId: auth.currentUser.uid,
 			})
 			navigation.replace('Home')
-		} catch(e) {
-			console.error("Error adding document: ", e)
+		} catch (e) {
+			console.error('Error adding document: ', e)
 		}
 	}
 

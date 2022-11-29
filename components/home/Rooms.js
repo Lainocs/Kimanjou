@@ -41,8 +41,6 @@ const Rooms = () => {
     getUserRooms()
   }, [])
 
-  console.log(rooms)
-
 	return (
 		<View style={styles.container}>
 			<Text>Rooms</Text>

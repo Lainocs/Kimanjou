@@ -1,11 +1,14 @@
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 
-const JoinRoom = () => {
+const JoinRoom = ({displayModal}) => {
+
   return (
     <TouchableOpacity 
       style={styles.button}
-      onPress={() => {}}
+      onPress={() => {
+				displayModal()
+			}}
     >
       <Text style={styles.buttonText}>Join</Text>
     </TouchableOpacity>
