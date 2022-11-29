@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View, Dimensions } from 'react-native'
+import { StyleSheet, Text, View, Dimensions, Image } from 'react-native'
 import React from 'react'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
 
 const MapScreen = () => {
   return (
@@ -15,7 +15,13 @@ const MapScreen = () => {
         latitudeDelta: 0.003,
         longitudeDelta: 0.003
       }}
-      customMapStyle={styles.map} />
+      customMapStyle={styles.map}>
+        <Marker coordinate={{
+          longitude: 2.2266284,
+          latitude: 48.8928156
+        }}>
+        </Marker>
+      </MapView>
     </View>
   )
 }
