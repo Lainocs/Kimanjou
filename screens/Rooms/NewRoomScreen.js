@@ -7,33 +7,29 @@ import {
 	View,
 } from 'react-native'
 import React from 'react'
+import { useState } from 'react'
 import { auth, db } from '../../firebase'
 import { useNavigation } from '@react-navigation/native'
-import { ref, set } from 'firebase/database'
+import { addDoc, collection, query, where, get } from 'firebase/firestore'
 
 const NewRoomScreen = () => {
 	const navigation = useNavigation()
 
-	const [roomName, setRoomName] = React.useState('')
+	const [roomName, setRoomName] = useState('')
 
-  const uuid = () => {
-    let random = Math.floor((1 + Math.random()) * 0x1000000)
-        .toString(16)
-        .substring(1);
-    return random
-}
-
-	const handleCreateRoom = () => {
-    let id = uuid()
-    set(ref(db, 'rooms/' + id), {
-      id: id,
-      name: roomName,
-      creator: auth.currentUser.uid
-    }).then(() => {
-      navigation.replace('Home')
-    }).catch((error) => {
-      console.log(error)
-    })
+	const handleCreateRoom = async () => {
+    try {
+			const docRef = await addDoc(collection(db, 'rooms'), {
+				name: roomName,
+			})
+			await addDoc(collection(db, 'rooms_users'), {
+				roomId: docRef.id,
+				userId: auth.currentUser.uid,
+			})
+			navigation.replace('Home')
+		} catch(e) {
+			console.error("Error adding document: ", e)
+		}
 	}
 
 	return (
