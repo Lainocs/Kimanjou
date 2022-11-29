@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { doc, getDoc, getDocs, collection, query, where } from 'firebase/firestore'
 import { db, auth } from '../../firebase'
@@ -44,9 +44,11 @@ const Rooms = () => {
 	return (
 		<View style={styles.container}>
 			<Text>Rooms</Text>
-      {rooms.map((room) => (
-        <Room key={room.id} name={room.name} nbUsers={room.users.length} />
-      ))}
+      <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false} alignItems='center'>
+        {rooms.map((room) => (
+          <Room key={room.id} name={room.name} nbUsers={room.users.length} />
+        ))}
+      </ScrollView>
 		</View>
 	)
 }
@@ -56,5 +58,10 @@ export default Rooms
 const styles = StyleSheet.create({
 	container: {
 		marginTop: 40,
+    width: '100%',
+    alignItems: 'center',
 	},
+  scroll: {
+    width: '100%',
+  },
 })

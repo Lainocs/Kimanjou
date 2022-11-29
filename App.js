@@ -10,6 +10,7 @@ import LoginScreen from './screens/LoginScreen'
 import HomeScreen from './screens/HomeScreen'
 import ProfileScreen from './screens/ProfileScreen'
 import NewRoomScreen from './screens/Rooms/NewRoomScreen'
+import MapScreen from './screens/MapScreen'
 
 export default function App() {
 	return (
@@ -45,6 +46,9 @@ export default function App() {
 				<Stack.Screen options={{
 					headerBackTitle: 'Rooms',
 				}} name="NewRoom" component={NewRoomScreen} />
+				<Stack.Screen options={{
+				headerBackTitle: 'Home',
+				}} name="Map" component={MapScreen} />
       </Stack.Navigator>
     </NavigationContainer>
 	)

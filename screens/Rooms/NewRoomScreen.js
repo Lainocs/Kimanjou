@@ -10,7 +10,7 @@ import React from 'react'
 import { useState } from 'react'
 import { auth, db } from '../../firebase'
 import { useNavigation } from '@react-navigation/native'
-import { addDoc, collection, query, where, get } from 'firebase/firestore'
+import { addDoc, collection, query, where, getDocs } from 'firebase/firestore'
 
 const NewRoomScreen = () => {
 	const navigation = useNavigation()
@@ -35,23 +35,20 @@ const NewRoomScreen = () => {
 			}
 
 			const q = query(collection(db, 'rooms'), where('name', '==', roomName))
-			const querySnapshot = await get(q)
+			const querySnapshot = await getDocs(q)
 			if (querySnapshot.empty) {
-				const roomId = generateRoomId()
-				await addDoc(collection(db, 'rooms'), {
+				const docRef = await addDoc(collection(db, 'rooms'), {
 					name: roomName,
-					id: roomId,
+					code: generateRoomId(),
+				})
+				await addDoc(collection(db, 'rooms_users'), {
+					roomId: docRef.id,
+					userId: auth.currentUser.uid,
 				})
 				navigation.replace('Home')
 			} else {
 				alert('Room name already exists')
 			}
-
-			await addDoc(collection(db, 'rooms_users'), {
-				roomId: docRef.id,
-				userId: auth.currentUser.uid,
-			})
-			navigation.replace('Home')
 		} catch (e) {
 			console.error('Error adding document: ', e)
 		}
