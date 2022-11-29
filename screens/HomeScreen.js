@@ -30,7 +30,7 @@ const HomeScreen = () => {
 							userId: auth.currentUser.uid,
 						})
 						setModalVisible(false)
-						// TODO - Navigate to the room
+						navigation.navigate('Map', { roomId: doc.id })
 					} else {
 						alert('You are already in this room')
 					}

@@ -46,7 +46,7 @@ const Rooms = () => {
 			<Text>Rooms</Text>
       <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false} alignItems='center'>
         {rooms.map((room) => (
-          <Room key={room.id} name={room.name} nbUsers={room.users.length} />
+          <Room key={room.id} id={room.id} name={room.name} nbUsers={room.users.length} />
         ))}
       </ScrollView>
 		</View>
@@ -63,5 +63,6 @@ const styles = StyleSheet.create({
 	},
   scroll: {
     width: '100%',
+    height: '80%',
   },
 })
