@@ -9,12 +9,16 @@ const Stack = createNativeStackNavigator()
 import LoginScreen from './screens/LoginScreen'
 import HomeScreen from './screens/HomeScreen'
 import ProfileScreen from './screens/ProfileScreen'
+import NewRoomScreen from './screens/Rooms/NewRoomScreen'
 
 export default function App() {
 	return (
     <NavigationContainer>
       <Stack.Navigator>
+				{/* Auth */}
         <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
+
+				{/* Home */}
         <Stack.Screen options={{
 					headerStyle: {
 						backgroundColor: '#2C6BED',
@@ -31,9 +35,16 @@ export default function App() {
 					),
 					headerBackVisible: false
 				}} name="Home" component={HomeScreen} />
+
+				{/* Profile */}
 				<Stack.Screen options={{
-				headerBackTitle: 'Carte',
+				headerBackTitle: 'Rooms',
 				}} name="Profile" component={ProfileScreen} />
+
+				{/* NewRoom */}
+				<Stack.Screen options={{
+					headerBackTitle: 'Rooms',
+				}} name="NewRoom" component={NewRoomScreen} />
       </Stack.Navigator>
     </NavigationContainer>
 	)
