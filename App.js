@@ -29,6 +29,7 @@ export default function App() {
 					headerRight: () => (
 						<Profile />
 					),
+					headerBackVisible: false
 				}} name="Home" component={HomeScreen} />
 				<Stack.Screen options={{
 				headerBackTitle: 'Carte',
