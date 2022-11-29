@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Modal, TextInput, TouchableOpacity } from 'reac
 import RoomManage from '../components/home/RoomManage'
 import Rooms from '../components/home/Rooms'
 import { React, useState, useEffect } from 'react'
-import { query, collection, where, getDocs, addDoc } from 'firebase/firestore'
+import { doc, getDoc, getDocs, collection, query, where, addDoc } from 'firebase/firestore'
 import { db, auth } from '../firebase'
 import { useNavigation } from '@react-navigation/native'
 
@@ -11,6 +11,50 @@ const HomeScreen = () => {
 	
 	let [modalVisible, setModalVisible] = useState(false)
 	let [roomCode, setRoomCode] = useState('')
+
+	const [rooms, setRooms] = useState([])
+
+	const getUserRooms = async () => {
+    const q = query(collection(db, 'rooms_users'), where('userId', '==', auth.currentUser.uid))
+    const querySnapshot = await getDocs(q)
+    const roomIds = []
+    querySnapshot.forEach((doc) => {
+      roomIds.push(doc.data().roomId)
+    })
+
+    roomIds.forEach(async (roomId) => {
+      const docRef = doc(db, 'rooms', roomId)
+      const docSnap = await getDoc(docRef)
+      if (docSnap.exists()) {
+        const room = docSnap.data()
+        room.id = docSnap.id
+
+        // get users who are in the room
+        const q = query(collection(db, 'rooms_users'), where('roomId', '==', room.id))
+        const querySnapshot = await getDocs(q)
+        const users = []
+        querySnapshot.forEach((doc) => {
+          users.push(doc.data().userId)
+        })
+        room.users = users
+
+				setRooms((rooms) => {
+					// sort rooms by name
+					const newRooms = [...rooms, room]
+					newRooms.sort((a, b) => {
+						if (a.name < b.name) {
+							return -1
+						} else if (a.name > b.name) {
+							return 1
+						} else {
+							return 0
+						}
+					})
+					return newRooms
+				})
+      }
+    })
+	}
 
 	const displayModal = () => {
 		setModalVisible(true)
@@ -30,7 +74,10 @@ const HomeScreen = () => {
 							userId: auth.currentUser.uid,
 						})
 						setModalVisible(false)
+						setRoomCode('')
 						navigation.navigate('Map', { roomId: doc.id })
+						setRooms([])
+						getUserRooms()
 					} else {
 						alert('You are already in this room')
 					}
@@ -40,6 +87,9 @@ const HomeScreen = () => {
 			alert('Room does not exist')
 		}
 	}
+  useEffect(() => {
+    getUserRooms()
+  }, [])
 
 	return (
 		<View style={styles.container}>
@@ -73,7 +123,7 @@ const HomeScreen = () => {
 					</View>
 				</View>
 			</Modal>
-			<Rooms />
+			<Rooms rooms={rooms} />
 		</View>
 	)
 }
