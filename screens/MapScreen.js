@@ -4,7 +4,7 @@ import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
 import Chat from '../components/buttons/Chat'
 
 const MapScreen = ({route}) => {
-  const { roomName, roomCode, roomId } = route.params
+  const { roomName, roomCode, roomId, users } = route.params
 
   return (
     <View style={styles.container}>
@@ -29,7 +29,7 @@ const MapScreen = ({route}) => {
         }}>
         </Marker>
       </MapView>
-      <Chat roomId={roomId} />
+      <Chat roomId={roomId} users={users} />
     </View>
   )
 }

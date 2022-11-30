@@ -43,7 +43,7 @@ const NewRoomScreen = () => {
 				})
 				await addDoc(collection(db, 'rooms_users'), {
 					roomId: docRef.id,
-					userId: auth.currentUser.uid,
+					userEmail: auth.currentUser.email,
 				})
 				navigation.replace('Home')
 			} else {

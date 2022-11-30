@@ -7,25 +7,27 @@ const Messages = ({ messages }) => {
 	return (
       <FlatList
 			data={messages}
-			style={styles.container}
       inverted
+      style={styles.container}
 			renderItem={({ item }) => (
 				<View
 					style={[
 						styles.message,
 						{
-							alignSelf:
-								item.userId === auth.currentUser.uid
+							alignItems:
+								item.userEmail === auth.currentUser.email
 									? 'flex-end'
 									: 'flex-start',
 						},
 					]}
 				>
-					<Text style={styles.messageText}>{item.userId}</Text>
-					<Text style={styles.messageText}>{item.message}</Text>
+          <Text style={styles.messageUser}>{item.userEmail}</Text>
+          <View style={styles.messageBox}>
+            <Text style={styles.messageText}>{item.message}</Text>
+          </View>
 				</View>
 			)}
-			keyExtractor={(item) => item.id}
+			keyExtractor={(item) => item.id}r
 		/>
 	)
 }
@@ -39,13 +41,18 @@ const styles = StyleSheet.create({
 		padding: 10,
 		height: '100%',
 	},
-  // safeContainer: {
-  //   flex: 1,
-  //   marginTop: StatusBar.current
-  // },
-	message: {
+  message: {
+    margin: 10,
+  },
+
+  messageUser: {
+    color: 'white',
+    fontWeight: '700',
+    marginRight: 5,
+  },
+	messageBox: {
 		backgroundColor: '#E1E1E1',
-		width: '60%',
+		maxWidth: '70%',
 		padding: 15,
 		borderRadius: 10,
 		marginTop: 5,

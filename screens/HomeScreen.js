@@ -15,7 +15,7 @@ const HomeScreen = () => {
 	const [rooms, setRooms] = useState([])
 
 	const getUserRooms = async () => {
-    const q = query(collection(db, 'rooms_users'), where('userId', '==', auth.currentUser.uid))
+    const q = query(collection(db, 'rooms_users'), where('userEmail', '==', auth.currentUser.email))
     const querySnapshot = await getDocs(q)
     const roomIds = []
     querySnapshot.forEach((doc) => {
@@ -34,7 +34,7 @@ const HomeScreen = () => {
         const querySnapshot = await getDocs(q)
         const users = []
         querySnapshot.forEach((doc) => {
-          users.push(doc.data().userId)
+          users.push(doc.data().userEmail)
         })
         room.users = users
 
@@ -66,16 +66,16 @@ const HomeScreen = () => {
 		if(!querySnapshot.empty) {
 			querySnapshot.forEach((doc) => {
 				// if user is not already in the room
-				const q2 = query(collection(db, 'rooms_users'), where('roomId', '==', doc.id), where('userId', '==', auth.currentUser.uid))
+				const q2 = query(collection(db, 'rooms_users'), where('roomId', '==', doc.id), where('userEmail', '==', auth.currentUser.email))
 				getDocs(q2).then((querySnapshot2) => {
 					if(querySnapshot2.empty) {
 						addDoc(collection(db, 'rooms_users'), {
 							roomId: doc.id,
-							userId: auth.currentUser.uid,
+							userEmail: auth.currentUser.email,
 						})
 						setModalVisible(false)
 						setRoomCode('')
-						navigation.navigate('Map', {roomName: doc.data().name, roomCode: doc.data().code})
+						navigation.navigate('Map', {roomName: doc.data().name, roomCode: doc.data().code, roomId: doc.id, users: doc.data().users})
 						setRooms([])
 						getUserRooms()
 					} else {
@@ -90,7 +90,6 @@ const HomeScreen = () => {
   useEffect(() => {
     getUserRooms()
   }, [])
-
 	return (
 		<View style={styles.container}>
 			<RoomManage displayModal={displayModal} />

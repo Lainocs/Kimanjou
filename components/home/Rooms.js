@@ -4,13 +4,12 @@ import { db, auth } from '../../firebase'
 import Room from '../buttons/Room'
 
 const Rooms = ({rooms}) => {
-
 	return (
 		<View style={styles.container}>
 			<Text>Rooms</Text>
       <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false} alignItems='center'>
         {rooms.map((room) => (
-          <Room key={room.id} id={room.id} name={room.name} nbUsers={room.users.length} code={room.code} />
+          <Room key={room.id} id={room.id} name={room.name} code={room.code} users={room.users} />
         ))}
       </ScrollView>
 		</View>
