@@ -2,9 +2,15 @@ import { StyleSheet, Text, View, Dimensions, Image } from 'react-native'
 import React from 'react'
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
 
-const MapScreen = () => {
+const MapScreen = ({route}) => {
+  const { roomName, roomCode } = route.params
+
   return (
     <View style={styles.container}>
+      <View style={styles.codeContainer}>
+        <Text style={styles.code}>{roomName}</Text>
+        <Text style={styles.code}>{roomCode}</Text>
+      </View>
       <MapView 
       provider={PROVIDER_GOOGLE}
       mapType='standard'
@@ -37,6 +43,22 @@ const styles = StyleSheet.create({
   },
   map: {
     width: '100%',
-    height: '100%'
+    height: '100%',
+  },
+  codeContainer: {
+    flexDirection: 'row',
+    backgroundColor: '#051D34',
+    width: '100%',
+    marginTop: 40,
+    padding: 10,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+
+  code: {
+    fontWeight: '700',
+    fontSize: 20,
+    color: 'white',
   }
 })

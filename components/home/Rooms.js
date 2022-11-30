@@ -10,7 +10,7 @@ const Rooms = ({rooms}) => {
 			<Text>Rooms</Text>
       <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false} alignItems='center'>
         {rooms.map((room) => (
-          <Room key={room.id} id={room.id} name={room.name} nbUsers={room.users.length} />
+          <Room key={room.id} id={room.id} name={room.name} nbUsers={room.users.length} code={room.code} />
         ))}
       </ScrollView>
 		</View>

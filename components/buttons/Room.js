@@ -2,7 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 
-const Room = ({ id, name, nbUsers }) => {
+const Room = ({ id, name, nbUsers, code }) => {
 	const navigation = useNavigation()
 
 	return (
@@ -10,7 +10,7 @@ const Room = ({ id, name, nbUsers }) => {
 			<TouchableOpacity
 				style={styles.button}
 				onPress={() => {
-					navigation.navigate('Map', { roomId: id })
+					navigation.navigate('Map', { roomName: name, roomCode: code })
 				}}
 			>
 				<Text style={styles.buttonText}>{name}</Text>

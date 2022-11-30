@@ -14,6 +14,10 @@ import MapScreen from './screens/MapScreen'
 
 export default function App() {
 
+	const handleGetRoomName = (roomName) => {
+		
+	}
+
 	return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -49,7 +53,7 @@ export default function App() {
 				}} name="NewRoom" component={NewRoomScreen} />
 				<Stack.Screen options={{
 				headerBackTitle: 'Home',
-				}} name="Map" component={MapScreen} />
+				}} name={'Map'} component={MapScreen} />
       </Stack.Navigator>
     </NavigationContainer>
 	)

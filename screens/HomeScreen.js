@@ -75,7 +75,7 @@ const HomeScreen = () => {
 						})
 						setModalVisible(false)
 						setRoomCode('')
-						navigation.navigate('Map', { roomId: doc.id })
+						navigation.navigate('Map', {roomName: doc.data().name, roomCode: doc.data().code})
 						setRooms([])
 						getUserRooms()
 					} else {
