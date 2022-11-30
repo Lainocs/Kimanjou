@@ -9,7 +9,7 @@ const Stack = createNativeStackNavigator()
 import LoginScreen from './screens/LoginScreen'
 import HomeScreen from './screens/HomeScreen'
 import ProfileScreen from './screens/ProfileScreen'
-import NewRoomScreen from './screens/Rooms/NewRoomScreen'
+import NewRoomScreen from './screens/NewRoomScreen'
 import MapScreen from './screens/MapScreen'
 
 export default function App() {

@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
-import { auth, db } from '../../firebase'
+import { auth, db } from '../firebase'
 import { useNavigation } from '@react-navigation/native'
 import { addDoc, collection, query, where, getDocs } from 'firebase/firestore'
 
