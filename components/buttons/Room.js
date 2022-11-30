@@ -10,7 +10,7 @@ const Room = ({ id, name, nbUsers, code }) => {
 			<TouchableOpacity
 				style={styles.button}
 				onPress={() => {
-					navigation.navigate('Map', { roomName: name, roomCode: code })
+					navigation.navigate('Map', { roomName: name, roomCode: code, roomId: id })
 				}}
 			>
 				<Text style={styles.buttonText}>{name}</Text>

@@ -11,12 +11,9 @@ import HomeScreen from './screens/HomeScreen'
 import ProfileScreen from './screens/ProfileScreen'
 import NewRoomScreen from './screens/NewRoomScreen'
 import MapScreen from './screens/MapScreen'
+import ChatScreen from './screens/ChatScreen'
 
 export default function App() {
-
-	const handleGetRoomName = (roomName) => {
-		
-	}
 
 	return (
     <NavigationContainer>
@@ -51,9 +48,16 @@ export default function App() {
 				<Stack.Screen options={{
 					headerBackTitle: 'Rooms',
 				}} name="NewRoom" component={NewRoomScreen} />
+
+				{/* Map */}
 				<Stack.Screen options={{
 				headerBackTitle: 'Home',
 				}} name={'Map'} component={MapScreen} />
+
+				{/* Chat */}
+				<Stack.Screen options={{
+					headerBackTitle: 'Map',
+				}} name={'Chat'} component={ChatScreen} />
       </Stack.Navigator>
     </NavigationContainer>
 	)

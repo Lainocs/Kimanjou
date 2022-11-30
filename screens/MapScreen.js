@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View, Dimensions, Image } from 'react-native'
 import React from 'react'
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
+import Chat from '../components/buttons/Chat'
 
 const MapScreen = ({route}) => {
-  const { roomName, roomCode } = route.params
+  const { roomName, roomCode, roomId } = route.params
 
   return (
     <View style={styles.container}>
@@ -28,6 +29,7 @@ const MapScreen = ({route}) => {
         }}>
         </Marker>
       </MapView>
+      <Chat roomId={roomId} />
     </View>
   )
 }
