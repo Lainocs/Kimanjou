@@ -29,21 +29,24 @@ const ChatScreen = ({ route }) => {
 	const handleSendMessage = async () => {
 		let timestamp = serverTimestamp()
 		try {
-			await addDoc(collection(db, 'rooms_messages'), {
-				roomId: roomId,
-				userEmail: auth.currentUser.email,
-				message: message,
-				timestamp: timestamp,
-			})
-			global.socket.emit('message', {
-				roomId: roomId,
-				userEmail: auth.currentUser.email,
-				message: message,
-				timestamp: timestamp,
-			})
-			setMessage('')
-			handleGetMessages()
-			
+			if(message.length > 0) {
+				await addDoc(collection(db, 'rooms_messages'), {
+					roomId: roomId,
+					userEmail: auth.currentUser.email,
+					message: message,
+					timestamp: timestamp,
+				})
+				global.socket.emit('message', {
+					roomId: roomId,
+					userEmail: auth.currentUser.email,
+					message: message,
+					timestamp: timestamp,
+				})
+				setMessage('')
+				handleGetMessages()
+			} else {
+				alert('Please enter a message')
+			}
 		} catch (e) {
 			console.error('Error adding document: ', e)
 		}
@@ -69,6 +72,7 @@ const ChatScreen = ({ route }) => {
 			setMessages((prev) => [...prev, data])
 			handleGetMessages()
 		})
+		handleGetMessages()
 	}, [])
 
 	return (

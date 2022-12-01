@@ -27,7 +27,7 @@ const Messages = ({ messages }) => {
           </View>
 				</View>
 			)}
-			keyExtractor={(item) => item.id}r
+			keyExtractor={(item) => item.id}
 		/>
 	)
 }

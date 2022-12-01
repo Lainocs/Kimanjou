@@ -61,6 +61,9 @@ export default function App() {
 				{/* Chat */}
 				<Stack.Screen options={{
 					headerBackTitle: 'Map',
+					headerRight: () => (
+						<Profile />
+					)
 				}} name={'Chat'} component={ChatScreen} />
       </Stack.Navigator>
     </NavigationContainer>
