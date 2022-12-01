@@ -7,6 +7,7 @@ import {
 } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Messages from '../components/chat/Messages'
+import Users from '../components/buttons/Users'
 import {
 	addDoc,
 	collection,
@@ -20,11 +21,10 @@ import {
 import { auth, db } from '../firebase'
 
 const ChatScreen = ({ route }) => {
-	const { roomId } = route.params
+	const { roomId, users } = route.params
 
 	const [message, setMessage] = useState('')
 	const [messages, setMessages] = useState([])
-  const [users, setUsers] = useState([])
 
 	const handleSendMessage = async () => {
 		let timestamp = serverTimestamp()
@@ -77,6 +77,7 @@ const ChatScreen = ({ route }) => {
 
 	return (
 		<View style={styles.container}>
+			<Users users={users} />
 			<Messages messages={messages} />
 			<View style={styles.inputContainer}>
 				<TextInput
@@ -102,26 +103,29 @@ export default ChatScreen
 const styles = StyleSheet.create({
 	container: {
 		backgroundColor: 'white',
-		height: '90%',
+		height: '100%',
+
 	},
 	inputContainer: {
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'space-between',
-		padding: 10,
+		paddingHorizontal: 10,
+		paddingBottom: 50,
+		paddingTop: 20,
 	},
 
 	input: {
 		backgroundColor: '#E1E1E1',
 		padding: 15,
-		width: '80%',
-		borderRadius: 30,
+		width: '70%',
+		borderRadius: 10,
 	},
 	button: {
 		backgroundColor: '#2C6BED',
 		width: '20%',
 		padding: 15,
-		borderRadius: 30,
+		borderRadius: 10,
 		alignItems: 'center',
 	},
 	buttonText: {

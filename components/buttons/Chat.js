@@ -2,7 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 
-const Chat = ({roomId}) => {
+const Chat = ({roomId, users}) => {
   const navigation = useNavigation()
 
   return (
@@ -11,6 +11,7 @@ const Chat = ({roomId}) => {
       onPress={() => {
         navigation.navigate('Chat', {
           roomId: roomId,
+          users: users
         })
 			}}
     >

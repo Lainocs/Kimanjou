@@ -16,6 +16,7 @@ import ProfileScreen from './screens/ProfileScreen'
 import NewRoomScreen from './screens/NewRoomScreen'
 import MapScreen from './screens/MapScreen'
 import ChatScreen from './screens/ChatScreen'
+import UsersScreen from './screens/UsersScreen'
 
 export default function App() {
 
@@ -61,10 +62,12 @@ export default function App() {
 				{/* Chat */}
 				<Stack.Screen options={{
 					headerBackTitle: 'Map',
-					headerRight: () => (
-						<Profile />
-					)
 				}} name={'Chat'} component={ChatScreen} />
+
+				{/* Users */}
+				<Stack.Screen options={{
+					headerBackTitle: 'Chat',
+				}} name={'Users'} component={UsersScreen} />
       </Stack.Navigator>
     </NavigationContainer>
 	)
