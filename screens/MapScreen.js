@@ -1,100 +1,91 @@
-// import { StyleSheet, Text, View, Dimensions, Image } from 'react-native'
-// import React from 'react'
-// import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
-
-// const MapScreen = () => {
-//   return (
-//     <View style={styles.container}>
-//       <MapView 
-//       provider={PROVIDER_GOOGLE}
-//       mapType='standard'
-//       style={styles.map}
-//       initialRegion={{
-//         latitude: 48.8928156,
-//         longitude: 2.2266284,
-//         latitudeDelta: 0.003,
-//         longitudeDelta: 0.003
-//       }}
-//       customMapStyle={styles.map}>
-//         <Marker coordinate={{
-//           longitude: 2.2266284,
-//           latitude: 48.8928156
-//         }}>
-//         </Marker>
-//       </MapView>
-//     </View>
-//   )
-// }
-
-// export default MapScreen
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: 'black',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-//   map: {
-//     width: '100%',
-//     height: '100%'
-//   }
-// })
-
-import React, { Component } from 'react'
-import { StyleSheet, View, Text, AppRegistry } from 'react-native'
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min;
-}
+import React, { Component, useState, useEffect } from 'react'
+import { StyleSheet, View, Text, AppRegistry, TouchableOpacity, SafeAreaView, Image } from 'react-native'
+import MapView, { Marker, PROVIDER_GOOGLE, AnimatedRegion } from 'react-native-maps';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import firebaseConfig from '../firebaseConfig';
 
 export default class MapScreen extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      markers: []
+      marker: null,
+      randomLong: null,
+      randomLat: null,
+      isPlace: true,
+      restau: {
+        title: 'La spaghettoni de Papa',
+        coord: {
+          longitude: 2.2277606651186947,
+          latitude: 48.89122385510402,
+        }
+      }
     }
-    this.handlePress = this.handlePress.bind(this);
   }
 
-  handlePress(e) {
-    this.setState({
-      markers: [
-        ...this.state.markers,
-        {
-          coordinate: e.nativeEvent.coordinate,
-          cost: `$${getRandomInt(50, 300)}`
-        }
-      ]
-    })
+  placeMark = (e) => {
+    if(this.state.isPlace) {
+      this.setState({marker: e.nativeEvent.coordinate})
+      this.setState({isPlace: false})
+    }
   }
+
 
   render() {
     return (
-      <MapView style={styles.container}
-      provider={PROVIDER_GOOGLE}
-      initialRegion={{
-        latitude: 48.8928156,
-        longitude: 2.2266284,
-        latitudeDelta: 0.003,
-        longitudeDelta: 0.003
-      }}
-      onPress={this.handlePress}
-      >
-        {this.state.markers.map((marker) => {
-          return <Marker {...marker} />
-        })}
-      </MapView>
+      <View style={styles.container}>
+        <MapView
+        style={styles.map}
+        provider={PROVIDER_GOOGLE}
+        mapType='standard'
+        userInterfaceStyle='dark'
+        showsUserLocation={true}
+        userLocationPriority='high'
+        initialRegion={{
+          latitude: 48.8928156,
+          longitude: 2.2266284,
+          latitudeDelta: 0.005,
+          longitudeDelta: 0.005
+        }}
+        onPress={this.placeMark}
+        // onPress={(e) => this.setState({ marker: e.nativeEvent.coordinate )}
+        >
+          <SafeAreaView>
+            <GooglePlacesAutocomplete
+              placeholder="Type a place"
+              onPress={(data, details = null) => console.log(data, details)}
+              query={{key: firebaseConfig.apiKey}}
+              fetchDetails={true}
+              onFail={error => console.log('errur ', error)}
+              onNotFound={() => console.log('no results')}
+              listEmptyComponent={() => (
+                <View style={{flex: 1}}>
+                  <Text>No results were found</Text>
+                </View>
+              )}
+            />
+        </SafeAreaView>
+          {
+            this.state.marker &&
+            <Marker draggable={true} onDragEnd={(e) => {console.log('dragEnd ', e.nativeEvent.coordinate)}} coordinate={this.state.marker} />
+          }
+          <Marker image={require('../assets/restaurant.png')} title={this.state.restau.title} coordinate={this.state.restau.coord}>
+          </Marker>
+        </MapView>
+      </View>
+
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  map: {
+    width: '100%',
+    height: '100%'
   }
 })
