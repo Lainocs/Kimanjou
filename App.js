@@ -3,6 +3,10 @@ import { React } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Profile from './components/buttons/Profile'
+import { io } from 'socket.io-client'
+
+const socket = io('http://172.20.10.4:3000')
+global.socket = socket
 
 const Stack = createNativeStackNavigator()
 

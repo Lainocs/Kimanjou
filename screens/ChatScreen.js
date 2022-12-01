@@ -27,15 +27,23 @@ const ChatScreen = ({ route }) => {
   const [users, setUsers] = useState([])
 
 	const handleSendMessage = async () => {
+		let timestamp = serverTimestamp()
 		try {
 			await addDoc(collection(db, 'rooms_messages'), {
 				roomId: roomId,
 				userEmail: auth.currentUser.email,
 				message: message,
-				timestamp: serverTimestamp(),
+				timestamp: timestamp,
+			})
+			global.socket.emit('message', {
+				roomId: roomId,
+				userEmail: auth.currentUser.email,
+				message: message,
+				timestamp: timestamp,
 			})
 			setMessage('')
 			handleGetMessages()
+			
 		} catch (e) {
 			console.error('Error adding document: ', e)
 		}
@@ -56,12 +64,11 @@ const ChatScreen = ({ route }) => {
 		setMessages(messages)
 	}
 
-  const handleGetUsers = async () => {
-
-  }
-
 	useEffect(() => {
-		handleGetMessages()
+		global.socket.on('message', (data) => {
+			setMessages((prev) => [...prev, data])
+			handleGetMessages()
+		})
 	}, [])
 
 	return (
