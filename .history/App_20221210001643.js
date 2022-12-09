@@ -12,7 +12,6 @@ import HomeScreen from './screens/HomeScreen'
 import ProfileScreen from './screens/ProfileScreen'
 import NewRoomScreen from './screens/Rooms/NewRoomScreen'
 import MapScreen from './screens/MapScreen'
-import { store } from './store'
 
 export default function App() {
 	return (

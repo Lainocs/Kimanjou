@@ -60,19 +60,10 @@ export default class MapScreen extends Component {
               placeholder="Type a place"
               nearbyPlacesAPI='GooglePlacesSearch'
               debounce={400}
-              styles={{
-                container: {
-                  flex: 0
-                },
-                textInput: {
-                  fontSize: 18
-                }
-              }}
               //onPress={(data, details = null) => console.log(data, details)}
               query={{key: firebaseConfig.GOOGLE_MAPS_API_KEY,
               language: 'fr' }}
-              enablePoweredByContainer={false}
-              fetchDetails={true}
+              // fetchDetails={true}
               // onFail={error => console.log('errur ', error)}
               // onNotFound={() => console.log('no results')}
               // listEmptyComponent={() => (

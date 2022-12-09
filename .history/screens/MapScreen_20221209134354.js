@@ -2,7 +2,6 @@ import React, { Component, useState, useEffect } from 'react'
 import { StyleSheet, View, Text, AppRegistry, TouchableOpacity, SafeAreaView, Image } from 'react-native'
 import MapView, { Marker, PROVIDER_GOOGLE, AnimatedRegion, Polyline } from 'react-native-maps';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { GOOGLE_MAPS_API_KEY } from '@env';
 import firebaseConfig from '../firebaseConfig';
 
 export default class MapScreen extends Component {
@@ -36,6 +35,12 @@ export default class MapScreen extends Component {
     this.setState({marker: e.nativeEvent.coordinate})
   }
 
+  exempleCoord = [
+    { latitude: 48.8928156, longitude: 2.2266284 },
+    {latitude: 48.89256433838694, longitude: 2.2263846918940544}
+  ]
+
+
   render() {
     return (
       <View style={styles.container}>
@@ -58,28 +63,16 @@ export default class MapScreen extends Component {
           <SafeAreaView>
             <GooglePlacesAutocomplete
               placeholder="Type a place"
-              nearbyPlacesAPI='GooglePlacesSearch'
-              debounce={400}
-              styles={{
-                container: {
-                  flex: 0
-                },
-                textInput: {
-                  fontSize: 18
-                }
-              }}
-              //onPress={(data, details = null) => console.log(data, details)}
-              query={{key: firebaseConfig.GOOGLE_MAPS_API_KEY,
-              language: 'fr' }}
-              enablePoweredByContainer={false}
+              onPress={(data, details = null) => console.log(data, details)}
+              query={{key: firebaseConfig.apiKey}}
               fetchDetails={true}
-              // onFail={error => console.log('errur ', error)}
-              // onNotFound={() => console.log('no results')}
-              // listEmptyComponent={() => (
-              //   <View style={{flex: 1}}>
-              //     <Text>No results were found</Text>
-              //   </View>
-              // )}
+              onFail={error => console.log('errur ', error)}
+              onNotFound={() => console.log('no results')}
+              listEmptyComponent={() => (
+                <View style={{flex: 1}}>
+                  <Text>No results were found</Text>
+                </View>
+              )}
             />
             <Polyline
             coordinates={[{ latitude: 48.8928156, longitude: 2.2266284 }, {

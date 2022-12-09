@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Profile from './components/buttons/Profile'
 import { Provider } from 'react-redux'
+import { store } from './store'
 
 const Stack = createNativeStackNavigator()
 
@@ -12,7 +13,6 @@ import HomeScreen from './screens/HomeScreen'
 import ProfileScreen from './screens/ProfileScreen'
 import NewRoomScreen from './screens/Rooms/NewRoomScreen'
 import MapScreen from './screens/MapScreen'
-import { store } from './store'
 
 export default function App() {
 	return (

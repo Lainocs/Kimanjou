@@ -3,7 +3,6 @@ import { StyleSheet, View, Text, AppRegistry, TouchableOpacity, SafeAreaView, Im
 import MapView, { Marker, PROVIDER_GOOGLE, AnimatedRegion, Polyline } from 'react-native-maps';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { GOOGLE_MAPS_API_KEY } from '@env';
-import firebaseConfig from '../firebaseConfig';
 
 export default class MapScreen extends Component {
   constructor(props) {
@@ -60,19 +59,10 @@ export default class MapScreen extends Component {
               placeholder="Type a place"
               nearbyPlacesAPI='GooglePlacesSearch'
               debounce={400}
-              styles={{
-                container: {
-                  flex: 0
-                },
-                textInput: {
-                  fontSize: 18
-                }
-              }}
               //onPress={(data, details = null) => console.log(data, details)}
-              query={{key: firebaseConfig.GOOGLE_MAPS_API_KEY,
+              query={{key: GOOGLE_MAPS_API_KEY,
               language: 'fr' }}
-              enablePoweredByContainer={false}
-              fetchDetails={true}
+              // fetchDetails={true}
               // onFail={error => console.log('errur ', error)}
               // onNotFound={() => console.log('no results')}
               // listEmptyComponent={() => (

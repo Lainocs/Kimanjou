@@ -2,8 +2,7 @@ import React, { Component, useState, useEffect } from 'react'
 import { StyleSheet, View, Text, AppRegistry, TouchableOpacity, SafeAreaView, Image } from 'react-native'
 import MapView, { Marker, PROVIDER_GOOGLE, AnimatedRegion, Polyline } from 'react-native-maps';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { GOOGLE_MAPS_API_KEY } from '@env';
-import firebaseConfig from '../firebaseConfig';
+import { env } from '@env';
 
 export default class MapScreen extends Component {
   constructor(props) {
@@ -60,26 +59,17 @@ export default class MapScreen extends Component {
               placeholder="Type a place"
               nearbyPlacesAPI='GooglePlacesSearch'
               debounce={400}
-              styles={{
-                container: {
-                  flex: 0
-                },
-                textInput: {
-                  fontSize: 18
-                }
-              }}
-              //onPress={(data, details = null) => console.log(data, details)}
-              query={{key: firebaseConfig.GOOGLE_MAPS_API_KEY,
+              onPress={(data, details = null) => console.log(data, details)}
+              query={{key: env.googleMapsApiKey,
               language: 'fr' }}
-              enablePoweredByContainer={false}
               fetchDetails={true}
-              // onFail={error => console.log('errur ', error)}
-              // onNotFound={() => console.log('no results')}
-              // listEmptyComponent={() => (
-              //   <View style={{flex: 1}}>
-              //     <Text>No results were found</Text>
-              //   </View>
-              // )}
+              onFail={error => console.log('errur ', error)}
+              onNotFound={() => console.log('no results')}
+              listEmptyComponent={() => (
+                <View style={{flex: 1}}>
+                  <Text>No results were found</Text>
+                </View>
+              )}
             />
             <Polyline
             coordinates={[{ latitude: 48.8928156, longitude: 2.2266284 }, {

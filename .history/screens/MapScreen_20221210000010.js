@@ -39,7 +39,7 @@ export default class MapScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <MapView
+        {/* <MapView
         style={styles.map}
         provider={PROVIDER_GOOGLE}
         mapType='standard'
@@ -54,25 +54,16 @@ export default class MapScreen extends Component {
         }}
         onPress={this.placeMark}
         // onPress={(e) => this.setState({ marker: e.nativeEvent.coordinate )}
-        >
+        > */}
           <SafeAreaView>
             <GooglePlacesAutocomplete
               placeholder="Type a place"
               nearbyPlacesAPI='GooglePlacesSearch'
               debounce={400}
-              styles={{
-                container: {
-                  flex: 0
-                },
-                textInput: {
-                  fontSize: 18
-                }
-              }}
               //onPress={(data, details = null) => console.log(data, details)}
               query={{key: firebaseConfig.GOOGLE_MAPS_API_KEY,
               language: 'fr' }}
-              enablePoweredByContainer={false}
-              fetchDetails={true}
+              // fetchDetails={true}
               // onFail={error => console.log('errur ', error)}
               // onNotFound={() => console.log('no results')}
               // listEmptyComponent={() => (
@@ -81,7 +72,7 @@ export default class MapScreen extends Component {
               //   </View>
               // )}
             />
-            <Polyline
+            {/* <Polyline
             coordinates={[{ latitude: 48.8928156, longitude: 2.2266284 }, {
               longitude: 2.2277606651186947,
               latitude: 48.89122385510402,
@@ -90,15 +81,15 @@ export default class MapScreen extends Component {
             tappable={true}
             fillColor='red'
             onPress={this.displayTime}
-            />
+            /> */}
         </SafeAreaView>
-          {
+          {/* {
             this.state.marker &&
             <Marker draggable={true} onDragEnd={(e) => {console.log('dragEnd ', e.nativeEvent.coordinate)}} coordinate={this.state.marker} />
           }
           <Marker image={require('../assets/restaurant.png')} title={this.state.restau.title} coordinate={this.state.restau.coord}>
           </Marker>
-        </MapView>
+        </MapView> */}
       </View>
     );
   }

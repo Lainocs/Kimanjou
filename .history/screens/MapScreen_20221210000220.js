@@ -39,7 +39,7 @@ export default class MapScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <MapView
+        {/* <MapView
         style={styles.map}
         provider={PROVIDER_GOOGLE}
         mapType='standard'
@@ -54,7 +54,7 @@ export default class MapScreen extends Component {
         }}
         onPress={this.placeMark}
         // onPress={(e) => this.setState({ marker: e.nativeEvent.coordinate )}
-        >
+        > */}
           <SafeAreaView>
             <GooglePlacesAutocomplete
               placeholder="Type a place"
@@ -71,8 +71,7 @@ export default class MapScreen extends Component {
               //onPress={(data, details = null) => console.log(data, details)}
               query={{key: firebaseConfig.GOOGLE_MAPS_API_KEY,
               language: 'fr' }}
-              enablePoweredByContainer={false}
-              fetchDetails={true}
+              // fetchDetails={true}
               // onFail={error => console.log('errur ', error)}
               // onNotFound={() => console.log('no results')}
               // listEmptyComponent={() => (
