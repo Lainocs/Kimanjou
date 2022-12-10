@@ -95,6 +95,8 @@ export default function MapScreen() {
               description: 'Destination'
             })
           )
+
+          console.log(event.nativeEvent.coordinate)
         }}
         >
           {destination?.location && (

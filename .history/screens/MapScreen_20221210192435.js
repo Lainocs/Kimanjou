@@ -57,11 +57,7 @@ export default function MapScreen() {
 
   const dispatch = useDispatch();
   const origin = useSelector(selectOrigin);
-  const destination = useSelector(selectDestination);
-
-  console.log('destination ', destination)
-
-  let newCoords;
+  const destination = useSelector(selectDestination)
 
   // const placeMark = (e) => {
   //   // if(this.state.isPlace) {
@@ -88,31 +84,15 @@ export default function MapScreen() {
           longitudeDelta: 0.005
         }}
         //onPress={this.placeMark}
-        onPress={(event) => {
+        onPress={(data, details = null) => {
           dispatch(
-            setDestination({
-              location: event.nativeEvent.coordinate,
-              description: 'Destination'
-            })
+            setDestination
           )
         }}
         >
-          {destination?.location && (
-          <Marker
-          coordinate={{
-            latitude: destination.location.lat,
-            longitude: destination.location.lng
-          }}
-          title='Destination'
-          description={destination.description}
-          identifier="destination"
-          />
-        )
-
-        }
           <SafeAreaView>
             <GooglePlacesAutocomplete
-              placeholder="Point de départ"
+              placeholder="Point A"
               nearbyPlacesAPI='GooglePlacesSearch'
               debounce={400}
               styles={{
@@ -145,6 +125,7 @@ export default function MapScreen() {
         </SafeAreaView>
         {origin?.location && (
           <Marker
+          draggable={true}
           coordinate={{
             latitude: origin.location.lat,
             longitude: origin.location.lng

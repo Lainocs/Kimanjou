@@ -59,8 +59,6 @@ export default function MapScreen() {
   const origin = useSelector(selectOrigin);
   const destination = useSelector(selectDestination);
 
-  console.log('destination ', destination)
-
   let newCoords;
 
   // const placeMark = (e) => {
@@ -95,21 +93,14 @@ export default function MapScreen() {
               description: 'Destination'
             })
           )
+
+          console.log(e.nativeEvent.coordinate)
         }}
         >
-          {destination?.location && (
-          <Marker
-          coordinate={{
-            latitude: destination.location.lat,
-            longitude: destination.location.lng
-          }}
-          title='Destination'
-          description={destination.description}
-          identifier="destination"
-          />
-        )
-
-        }
+          {/* {
+            newCoords &&
+            <Marker draggable={true} onDragEnd={(e) => {console.log('dragEnd ', e.nativeEvent.coordinate)}} coordinate={newCoords} />
+          } */}
           <SafeAreaView>
             <GooglePlacesAutocomplete
               placeholder="Point de départ"

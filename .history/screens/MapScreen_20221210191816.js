@@ -4,7 +4,7 @@ import MapView, { Marker, PROVIDER_GOOGLE, AnimatedRegion, Polyline } from 'reac
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import firebaseConfig from '../firebaseConfig';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectDestination, selectOrigin, setDestination, setOrigin } from '../slices/navSlice';
+import { selectOrigin, setDestination, setOrigin } from '../slices/navSlice';
 import * as Location from 'expo-location';
 
 export default function MapScreen() {
@@ -57,11 +57,6 @@ export default function MapScreen() {
 
   const dispatch = useDispatch();
   const origin = useSelector(selectOrigin);
-  const destination = useSelector(selectDestination);
-
-  console.log('destination ', destination)
-
-  let newCoords;
 
   // const placeMark = (e) => {
   //   // if(this.state.isPlace) {
@@ -88,36 +83,16 @@ export default function MapScreen() {
           longitudeDelta: 0.005
         }}
         //onPress={this.placeMark}
-        onPress={(event) => {
-          dispatch(
-            setDestination({
-              location: event.nativeEvent.coordinate,
-              description: 'Destination'
-            })
-          )
-        }}
+        // onPress={(e) => this.setState({ marker: e.nativeEvent.coordinate )}
         >
-          {destination?.location && (
-          <Marker
-          coordinate={{
-            latitude: destination.location.lat,
-            longitude: destination.location.lng
-          }}
-          title='Destination'
-          description={destination.description}
-          identifier="destination"
-          />
-        )
-
-        }
           <SafeAreaView>
             <GooglePlacesAutocomplete
-              placeholder="Point de départ"
+              placeholder="Point A"
               nearbyPlacesAPI='GooglePlacesSearch'
               debounce={400}
               styles={{
                 container: {
-                  flex: 1,
+                  flex: 0
                 },
                 textInput: {
                   fontSize: 18
@@ -145,6 +120,7 @@ export default function MapScreen() {
         </SafeAreaView>
         {origin?.location && (
           <Marker
+          draggable={true}
           coordinate={{
             latitude: origin.location.lat,
             longitude: origin.location.lng
@@ -156,7 +132,54 @@ export default function MapScreen() {
         )
 
         }
-        
+        <SafeAreaView>
+            <GooglePlacesAutocomplete
+              placeholder="Point B"
+              nearbyPlacesAPI='GooglePlacesSearch'
+              debounce={400}
+              styles={{
+                container: {
+                  flex: 0,
+                  marginTop: '10pt'
+                },
+                textInput: {
+                  fontSize: 18
+                }
+              }}
+              onPress={(data, details = null) => {
+                dispatch(setOrigin({
+                  location: details.geometry.location,
+                  description: data.description
+                }))
+              }}
+              query={{key: firebaseConfig.GOOGLE_MAPS_API_KEY,
+              language: 'fr' }}
+              enablePoweredByContainer={false}
+              fetchDetails={true}
+              returnKeyType={"search"}
+              // onFail={error => console.log('errur ', error)}
+              // onNotFound={() => console.log('no results')}
+              // listEmptyComponent={() => (
+              //   <View style={{flex: 1}}>
+              //     <Text>No results were found</Text>
+              //   </View>
+              // )}
+            />
+        </SafeAreaView>
+        {origin?.location && (
+          <Marker
+          draggable={true}
+          coordinate={{
+            latitude: origin.location.lat,
+            longitude: origin.location.lng
+          }}
+          title='Origin'
+          description={origin.description}
+          identifier="origin"
+          />
+        )
+
+        }
           {/* {
             this.state.marker &&
             <Marker draggable={true} onDragEnd={(e) => {console.log('dragEnd ', e.nativeEvent.coordinate)}} coordinate={this.state.marker} />
