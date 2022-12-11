@@ -4,6 +4,7 @@ import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import firebaseConfig from '../firebaseConfig'
 import { useDispatch, useSelector } from 'react-redux'
+import { Chat } from '../components/buttons/Chat'
 import {
 	selectDestination,
 	selectOrigin,
@@ -14,7 +15,8 @@ import {
 } from '../slices/navSlice'
 import MapViewDirections from 'react-native-maps-directions'
 
-export default function MapScreen() {
+const MapScreen = ({ route }) => {
+	const { roomName, roomCode, roomId, users } = route.params
 	// const [location, setLocation] = useState(null);
 	// const [errorMsg, setErrorMsg] = useState(null);
 	const mapRef = useRef(null)
@@ -248,9 +250,12 @@ export default function MapScreen() {
 					/>
 				)}
 			</MapView>
+			<Chat roomId={roomId} users={users} />
 		</View>
 	)
 }
+
+export default MapScreen
 
 const styles = StyleSheet.create({
 	container: {
