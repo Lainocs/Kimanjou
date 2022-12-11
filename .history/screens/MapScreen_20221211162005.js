@@ -40,13 +40,22 @@ export default function MapScreen() {
 
   // Zoom out when choose destination
 
-  useEffect(() => {
-      if(!origin || !destination) return;
+  // useEffect(() => {
+  //   if(!origin || !destination) return;
 
-      mapRef.current.fitToSuppliedMarkers(['origin', 'destination'], {
-        edgePadding: { top: 50, left: 50, bottom: 50, right: 50 }
-      })
-  }, [origin, destination])
+  //   mapRef.current.fitToSuppliedMarkers(['origin', 'destination'], {
+  //     edgePadding: { top: 50, left: 50, bottom: 50, right: 50 }
+  //   })
+
+  // }, [origin, destination])
+
+  const zoomOut = () => {
+    if(!origin || !destination) return;
+
+    mapRef.current.fitToSuppliedMarkers(['origin', 'destination'], {
+      edgePadding: { top: 50, left: 50, bottom: 50, right: 50 }
+    })
+  }
 
   // Calculate Travel time
   useEffect(() => {
@@ -223,6 +232,7 @@ export default function MapScreen() {
                   location: details.geometry.location,
                   description: data.description
                 }))
+                zoomOut();
               }}
               query={{key: firebaseConfig.GOOGLE_MAPS_API_KEY,
               language: 'fr' }}

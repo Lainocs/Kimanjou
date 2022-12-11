@@ -41,29 +41,29 @@ export default function MapScreen() {
   // Zoom out when choose destination
 
   useEffect(() => {
-      if(!origin || !destination) return;
+    if(!origin || !destination) return;
 
-      mapRef.current.fitToSuppliedMarkers(['origin', 'destination'], {
-        edgePadding: { top: 50, left: 50, bottom: 50, right: 50 }
-      })
+    mapRef.current.fitToSuppliedMarkers(['origin', 'destination'], {
+      edgePadding: { top: 50, left: 50, bottom: 50, right: 50 }
+    })
   }, [origin, destination])
 
   // Calculate Travel time
   useEffect(() => {
-    if(!origin || !destination) {
-      const getTravelTime = async () => {
-        fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?
-        origins=${origin.description}&destinations=${destination.description}
-        &key=${firebaseConfig.GOOGLE_MAPS_API_KEY}`)
-        .then(res => res.json())
-        .then(data => {
-          console.log('data ')
-          dispatch(setTravelTimeInformation(data.rows[0].elements[0]))
-        })
-      }
-  
-      getTravelTime();
+    if(!origin || !destination) return;
+
+    const getTravelTime = async () => {
+      fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?
+      origins=${origin.description}&destinations=${destination.description}
+      &key=${firebaseConfig.GOOGLE_MAPS_API_KEY}`)
+      .then(res => res.json())
+      .then(data => {
+        console.log('data ', data)
+        dispatch(setTravelTimeInformation(data))
+      })
     }
+
+    getTravelTime();
 
   }, [origin, destination, firebaseConfig.GOOGLE_MAPS_API_KEY])
 
@@ -199,7 +199,7 @@ export default function MapScreen() {
                   fontSize: 18,
                   zIndex: 2,
                   width: '100%',
-                  marginTop: 100
+                  marginTop: 50
                 },
                 listContainer: {
                   zIndex: 10,

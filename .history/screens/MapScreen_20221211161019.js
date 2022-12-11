@@ -12,6 +12,7 @@ export default function MapScreen() {
   // const [location, setLocation] = useState(null);
   // const [errorMsg, setErrorMsg] = useState(null);
   const mapRef = useRef(null);
+  let bruhOrigin = '';
 
   // Get current location
   // useEffect(() => {
@@ -41,23 +42,23 @@ export default function MapScreen() {
   // Zoom out when choose destination
 
   useEffect(() => {
-      if(!origin || !destination) return;
+    if(!origin || !destination) return;
 
-      mapRef.current.fitToSuppliedMarkers(['origin', 'destination'], {
-        edgePadding: { top: 50, left: 50, bottom: 50, right: 50 }
-      })
+    mapRef.current.fitToSuppliedMarkers(['origin', 'destination'], {
+      edgePadding: { top: 50, left: 50, bottom: 50, right: 50 }
+    })
   }, [origin, destination])
 
   // Calculate Travel time
   useEffect(() => {
-    if(!origin || !destination) {
+    if(!origin.description || !destination.description) {
       const getTravelTime = async () => {
         fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?
         origins=${origin.description}&destinations=${destination.description}
         &key=${firebaseConfig.GOOGLE_MAPS_API_KEY}`)
         .then(res => res.json())
         .then(data => {
-          console.log('data ')
+          console.log('data ', data)
           dispatch(setTravelTimeInformation(data.rows[0].elements[0]))
         })
       }
