@@ -5,6 +5,7 @@ const firebaseConfig = {
 	storageBucket: '',
 	messagingSenderId: '',
 	appId: '',
+	GOOGLE_MAPS_API_KEY: '',
 }
 
 export default firebaseConfig

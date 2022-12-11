@@ -14,3 +14,7 @@ web-build/
 .DS_Store
 
 firebaseConfig.js
+app.json
+yarn.lock
+.env
+.history
