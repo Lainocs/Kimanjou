@@ -16,3 +16,5 @@ web-build/
 firebaseConfig.js
 app.json
 yarn.lock
+.env
+.history

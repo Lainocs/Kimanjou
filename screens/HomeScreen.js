@@ -5,6 +5,7 @@ import { React, useState, useEffect } from 'react'
 import { doc, getDoc, getDocs, collection, query, where, addDoc } from 'firebase/firestore'
 import { db, auth } from '../firebase'
 import { useNavigation } from '@react-navigation/native'
+import Map from '../components/buttons/Map'
 
 const HomeScreen = () => {
 	const navigation = useNavigation()
